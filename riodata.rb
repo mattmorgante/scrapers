@@ -40,6 +40,8 @@ parse_page4.css('.price-amount').each do |price|
   prices_array.push(listing_price.to_i)
 end 
 
-arr = prices_array
+CSV.open('rio.csv', 'w') do |csv|
+  csv << prices_array
+end 
 
-puts (arr.inject(:+).to_f / arr.size)
+
