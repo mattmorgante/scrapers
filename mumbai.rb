@@ -19,14 +19,19 @@ parse_page2.css('span.price').each do |price|
   prices_array.push(price.to_i)
 end 
 
-page3 = HTTParty.get('http://www.hostelworld.com/hostels/mumbai?page=3')
-parse_page3 = Nokogiri::HTML(page3)
-parse_page3.css('span.price').each do |price| 
-  price = price.text.delete('€, ')
-  prices_array.push(price.to_i)
-end 
+# page3 = HTTParty.get('http://www.hostelworld.com/hostels/mumbai?page=3')
+# parse_page3 = Nokogiri::HTML(page3)
+# parse_page3.css('span.price').each do |price| 
+#   price = price.text.delete('€, ')
+#   prices_array.push(price.to_i)
+# end 
 
 prices_array.delete(0)
 prices_array = prices_array.select.with_index { |_, i| i.odd? }
 puts prices_array
+
+CSV.open('mumbai.csv', 'w') do |csv|
+  csv << prices_array
+end 
+
 
